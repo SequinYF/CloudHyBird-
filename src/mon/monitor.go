@@ -25,6 +25,7 @@ func client_monitor() {
 			select {
 			case ev := <-watch.Events:
 				{
+					go sendToserver(ev.name, ev.Op)
 					if ev.Op & fsnotify.Create == fsnotify.Create  {
 						log.Println("create file", ev.Name)
 					}
