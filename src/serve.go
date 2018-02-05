@@ -33,6 +33,7 @@ func main() {
 		if err != nil {
 			log.Fatal("accept")
 		}
+		fmt.Println("addr: %s ",conn.LocalAddr().String())
 		go Handler_conn(conn)
 	}
 }

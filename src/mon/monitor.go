@@ -6,10 +6,15 @@ import (
 	"log"
 )
 
+//监控目录
 const filepath  =  "/Users/sequin_yf/Git/CloudHyBird-/"
 
-func client_monitor() {
-	fmt.Println("mon run")
+//客户端监控程序
+func Client_monitor() {
+
+	fmt.Println("Monitor start...")
+
+	//建立监控队列
 	watch, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal(err)
@@ -17,15 +22,14 @@ func client_monitor() {
 
 	defer watch.Close()
 
+	//阻塞
 	done := make(chan bool)
-
 
 	go func() {
 		for {
 			select {
 			case ev := <-watch.Events:
 				{
-					go sendToserver(ev.name, ev.Op)
 					if ev.Op & fsnotify.Create == fsnotify.Create  {
 						log.Println("create file", ev.Name)
 					}

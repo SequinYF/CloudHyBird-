@@ -7,6 +7,7 @@ import (
 	"reflect"
 	"io"
 	"../mon"
+	"runtime"
 )
 
 
@@ -15,20 +16,25 @@ const server_addr = "127.0.0.1:9000"
 
 func main()  {
 
-	//go m.client_monitor()
+	//启动本地监控程序
+	go m.Client_monitor()
 
+	//打印客户端信息
+	var goos = runtime.GOOS
+	fmt.Printf("The os is : %s\n", goos)
+
+	//连接服务器
 	conn, err := net.Dial("tcp", server_addr)
 	if err != nil {
 		log.Fatal("cilent dail")
 	}
-	//
 
-	fmt.Println("connect to server: " + conn.RemoteAddr().String())
+	//打印服务段地址、本机地址、通讯协议
+	fmt.Println("Connect to server: " + conn.RemoteAddr().String())
 	fmt.Println(conn.LocalAddr())
 	fmt.Println(reflect.TypeOf(conn.LocalAddr()))
-	//	conn.Write([]byte("from client"))
 	buf := make([]byte, 10)
-	//m.upload_to_server(conn, filepath)
+
 
 	for {
 		n, err := conn.Read(buf)

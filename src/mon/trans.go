@@ -14,6 +14,7 @@ type FileInfo struct {
 	Name string
 	Size int
 	Message []byte
+	op uint32
 }
 
 func checkFileIsExist(filename string) bool {
@@ -24,8 +25,11 @@ func checkFileIsExist(filename string) bool {
 	return exist
 }
 
+func sendToserver(filename string, op uint32) {
 
-func upload_to_server(conn net.Conn, filepath string) bool {
+}
+
+func Upload_to_server(conn net.Conn, filepath string, op uint32) bool {
 
 	var file *os.File
 
@@ -53,6 +57,7 @@ func upload_to_server(conn net.Conn, filepath string) bool {
 		filepath,
 		temp_size,
 		temp_file,
+		op,
 	}
 
 	b, er := json.Marshal(fi)
